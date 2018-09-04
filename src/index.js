@@ -1,14 +1,26 @@
 import template from './template.js';
 import {createServiceFBC, updateData} from './services/fbcService.js';
-//available pages
+import {defaultLang} from './constants.js';
+
 (function() {
   class DateWidget extends HTMLElement {
     // Fires when an instance of the element is created.
     createdCallback() {
       this.createShadowRoot().innerHTML = template;
+
       this.$container = this.shadowRoot.querySelector('.chcontext__container');
-      this.updateTheme(this.getAttribute('theme'));
-      this.createService(this.getAttribute('query'), this.getAttribute('page'));
+      this.$lang = this.getAttribute('lang') || defaultLang;
+      this.$theme = this.getAttribute('theme');
+      this.$query = this.getAttribute('query');
+      this.$page = this.getAttribute('page');
+
+      if (!this.$page) {
+        this.showError();
+        return;
+      }
+
+      this.updateTheme();
+      this.createService();
     };
 
     // Fires when an instance was inserted into the document.
@@ -17,34 +29,41 @@ import {createServiceFBC, updateData} from './services/fbcService.js';
     // Fires when an attribute was added, removed, or updated.
     attributeChangedCallback(attrName, oldVal, newVal) {
       switch (attrName) {
-          case "theme":
-              this.updateTheme(newVal);
-              break;
-          case "query":
-              updateData(newVal, this);
-              break;
-          case "page":
-              createService(this.getAttribute('query'), newVal);
-              break;
+        case "theme":
+          this.$theme = newVal;
+          this.updateTheme(newVal);
+          break;
+        case "query":
+          this.$query = newVal;
+          updateData(this);
+          break;
+        case "page":
+          this.$page = newVal;
+          createService();
+          break;
       }
     };
 
-    createService(query, page) {
-      switch (page) {
+    createService() {
+      switch (this.$page) {
           case "FBC":
-              createServiceFBC(query, this);
+              createServiceFBC(this);
               break;
           default:
               break;
       }
     };
 
-    updateTheme(theme) {
+    updateTheme() {
         var val = "violet";
-        if (["violet"].indexOf(theme) > -1) {
-            val = theme;
+        if (["violet"].indexOf(this.$theme) > -1) {
+            val = this.$theme;
         }
         this.$container.className = "chcontext__container " + val;
+    };
+
+    showError() {
+      this.$container.innerHTML = "error";
     };
   }
 

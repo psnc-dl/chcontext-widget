@@ -4,10 +4,10 @@ const rowsNum = 3;
 const resourceUrl = apiAddress + '/search#q=id:';
 const thumbnailUrl = apiAddress + '/thumbnails/';
 
-//lang
+export const updateData = (that) => {
+  loadingTemplate(that);
 
-export const updateData = (query, that) => {
-  fetch(`${searchUrl}${query}&rows=${rowsNum}&fl=dc_title%2Cdcterms_alternative%2Cdc_creator%2Cdc_contributor%2Cid%2Cdc_date&wt=json`)
+  fetch(`${searchUrl}${that.$query}&rows=${rowsNum}&fl=dc_title%2Cdcterms_alternative%2Cdc_creator%2Cdc_contributor%2Cid%2Cdc_date&wt=json`)
     .then(response => {
       if (response.ok) {
         return Promise.resolve(response);
@@ -19,14 +19,38 @@ export const updateData = (query, that) => {
     .then(response => response.json()) // parse response as JSON
     .then(data => {
       // success
-      updateDataList(query, that, data.response);
+      resetTemplate(that);
+      updateDataList(that, data.response);
     })
     .catch(function(error) {
+      resetTemplate(that);
+      errorTemplate(that);
       console.log(`Error: ${error.message}`);
     });
 };
 
-const prepareTemplate = (query, that) => {
+const loadingTemplate = (that) => {
+  that.$container.querySelector('.chcontext__results__container').innerHTML = 'loading';
+};
+
+const noResultsTemplate = (that) => {
+  that.$container.querySelector('.chcontext__results__container').innerHTML = 'no results';
+};
+
+const errorTemplate = (that) => {
+  let html = `<div class="chcontext__error">`;
+  html += `<p>Wystapil blad</p>`;
+  html += `<button id="reload">zaladuj ponownie</button>`;
+  html += `</div>`;
+
+  that.$container.querySelector('.chcontext__results__container').innerHTML = html;
+};
+
+const resetTemplate = (that) => {
+  that.$container.querySelector('.chcontext__results__container').innerHTML = '';
+};
+
+const prepareTemplate = (that) => {
   that.$container.insertAdjacentHTML(
       'afterbegin',
       `<div class="chcontext__logo">
@@ -34,13 +58,19 @@ const prepareTemplate = (query, that) => {
           <h3 class="chcontext__logo-name">Federacja Bibliotek Cyfrowych</h3>
       </div>`
     );
+
+  that.$container.insertAdjacentHTML(
+      'beforeend',
+      `<div class="chcontext__results__container">
+      </div>`
+    );
 };
 
-const updateDataList = (query, that, data) => {
-    that.numFound = data.numFound;
+const updateDataList = (that, data) => {
+    that.$numFound = data.numFound;
 
     if (data.docs.length) {
-      that.listData = data.docs.map(doc =>{
+      that.$listData = data.docs.map(doc =>{
         let title = doc.dc_title;
 				if (title !== undefined && title instanceof Array) {
 					title = title[0];
@@ -65,15 +95,15 @@ const updateDataList = (query, that, data) => {
 				};}
       );
     }
-    updateListDom(query, that);
-    updateTotalDom(query, that);
+    updateListDom(that);
+    updateTotalDom(that);
 };
 
-const updateListDom = (query, that) => {
-  if (!!that.listData && that.listData.length) {
+const updateListDom = (that) => {
+  if (!!that.$listData && that.$listData.length) {
     let html = "<ul class=\"chcontext__data-list\">";
 
-    that.listData.forEach(function(item, index) {
+    that.$listData.forEach(function(item, index) {
       html += "<li class=\"chcontext__data-list__item\">";
 
       if (!!item.link) {
@@ -104,28 +134,30 @@ const updateListDom = (query, that) => {
 
     html += "</ul>";
 
-    that.$container.insertAdjacentHTML(
+    that.$container.querySelector('.chcontext__results__container').insertAdjacentHTML(
         'beforeend',
         html
       );
+  } else {
+    noResultsTemplate(that);
   }
 };
 
-const updateTotalDom = (query, that) => {
+const updateTotalDom = (that) => {
   let html = `<div>`;
-  html += `<a href="${searchUrl}${query}">`;
+  html += `<a href="${searchUrl}${that.$query}">`;
   html += `Wszystkie wyniki wyszukiwania`;
-  html += `<span> (${that.numFound})</span>`;
+  html += `<span> (${that.$numFound})</span>`;
   html += `</a>`;
   html += `</div>`;
 
-  that.$container.insertAdjacentHTML(
+  that.$container.querySelector('.chcontext__results__container').insertAdjacentHTML(
       'beforeend',
       html
     );
 };
 
-export const createServiceFBC = (query, that) => {
-  prepareTemplate(query, that);
-  updateData(query, that);
+export const createServiceFBC = (that) => {
+  prepareTemplate(that);
+  updateData(that);
 };
