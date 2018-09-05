@@ -13,9 +13,9 @@ let template =
       margin: 10px 0;
       transition: border .2s ease-in-out;
       font-family: tahoma, arial, helvetica, sans-serif;
-      font-size: 12px;
+      font-size: 14px;
       width: 500px;
-      padding: 15px 5px;
+      padding: 15px;
       text-align: center;
     }
 
@@ -30,7 +30,7 @@ let template =
       border: solid 1px #dadada;
       margin: 5px 0;
       display: block;
-      padding: 3px;
+      padding: 10px;
       border-radius: 4px;
     }
 
@@ -57,17 +57,26 @@ let template =
 
     .chcontext__data-list__item__img {
       max-width: 100%;
-      max-height: 50px;
+      max-height: 70px;
     }
 
     .chcontext__data-list__item__text {
-
+      margin-bottom: 1px;
     }
 
     .chcontext__data-list__item__text.title {
-      font-size: 15px;
-      font-weight: 500;
-      margin-bottom: 2px;
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 3px;
+    }
+
+    .chcontext__data-list__item__text.author span {
+      font-style: italic;
+    }
+
+    .chcontext__data-list__item__text.date {
+      color: #444444;
+      font-size: 13px;
     }
 
     .chcontext__data-list__link {
@@ -85,11 +94,12 @@ let template =
 
     .chcontext__total__link {
       color: #6f4897;
-      // font-size: 15px;
+      font-size: 15px;
+      font-weight: bold;
     }
 
     .chcontext__total__link:hover {
-      color: #905dc3;
+      color: #563d7c;
     }
 
     /* THEME CODE */
@@ -109,7 +119,8 @@ let template =
       background-color: #6f4897;
     }
 
-    .chcontext__container.violet .chcontext__data-list__item:hover .chcontext__data-list__link {
+    .chcontext__container.violet .chcontext__data-list__item:hover .chcontext__data-list__link,
+    .chcontext__container.violet .chcontext__data-list__item:hover .chcontext__data-list__item__text.date {
       color: #fff;
     }
 

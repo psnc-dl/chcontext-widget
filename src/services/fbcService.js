@@ -136,11 +136,11 @@ const updateListDom = (that) => {
       }
 
 			if (!!item.author) {
-        html += `<div class=\"chcontext__data-list__item__text\">${dictionary[that.$lang].authorLabel}: ${item.author}</div>`;
+        html += `<div class=\"chcontext__data-list__item__text author\"><span>${item.author}</span></div>`;
       }
 
 			if(!!item.date){
-        html += `<div class=\"chcontext__data-list__item__text\">${dictionary[that.$lang].dateLabel}: ${item.date}</div>`;
+        html += `<div class=\"chcontext__data-list__item__text date\"><span>${item.date}</span></div>`;
 			}
 
       html += `</div>`;
