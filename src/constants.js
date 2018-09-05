@@ -1,6 +1,8 @@
 export const dictionary = {
   pl: {
     "seeMore": "Więcej wyników",
+    "error": "Wystąpił błąd",
+    "reload": "Załaduj ponownie",
     "poweredBy": "Dostarczone przez",
     "titleLabel": "Tytuł",
     "authorLabel": "Autor",
@@ -8,6 +10,8 @@ export const dictionary = {
   },
   en: {
     "seeMore": "See more results",
+    "error": "Error",
+    "reload": "Reload",
     "poweredBy": "Powered by",
     "titleLabel": "Title",
     "authorLabel": "Author",

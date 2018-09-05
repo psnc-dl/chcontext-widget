@@ -1,6 +1,6 @@
 import template from './template.js';
 import {createServiceFBC, updateData} from './services/fbcService.js';
-import {defaultLang} from './constants.js';
+import {defaultLang, searchProviders} from './constants.js';
 
 (function() {
   class DateWidget extends HTMLElement {
@@ -14,7 +14,9 @@ import {defaultLang} from './constants.js';
       this.$query = this.getAttribute('query');
       this.$page = this.getAttribute('page');
 
-      if (!this.$page) {
+      const isValidProvider = searchProviders.filter(provider => provider.name === this.$page).length > 0;
+
+      if (!this.$page || !isValidProvider) {
         this.showError();
         return;
       }

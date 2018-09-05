@@ -1,3 +1,7 @@
+import {dictionary} from '../constants.js';
+import {searchProviders} from '../constants.js';
+import loading from '../icons/loading.gif';
+
 const apiAddress = 'http://fbc.pionier.net.pl';
 const searchUrl = apiAddress + '/index/select?q=';
 const rowsNum = 3;
@@ -30,7 +34,8 @@ export const updateData = (that) => {
 };
 
 const loadingTemplate = (that) => {
-  that.$container.querySelector('.chcontext__results__container').innerHTML = 'loading';
+  let html = `<img src=${loading} />`;
+  that.$container.querySelector('.chcontext__results__container').innerHTML = html;
 };
 
 const noResultsTemplate = (that) => {
@@ -39,11 +44,12 @@ const noResultsTemplate = (that) => {
 
 const errorTemplate = (that) => {
   let html = `<div class="chcontext__error">`;
-  html += `<p>Wystapil blad</p>`;
-  html += `<button id="reload">zaladuj ponownie</button>`;
+  html += `<p>${dictionary[that.$lang].error}</p>`;
+  html += `<button class="chcontext__reload">${dictionary[that.$lang].reload}</button>`;
   html += `</div>`;
 
   that.$container.querySelector('.chcontext__results__container').innerHTML = html;
+  that.$container.querySelector('.chcontext__reload').addEventListener('click', function() { updateData(that) });
 };
 
 const resetTemplate = (that) => {
@@ -51,11 +57,13 @@ const resetTemplate = (that) => {
 };
 
 const prepareTemplate = (that) => {
+  const providerName = searchProviders.filter(provider => provider.name === that.$page)[0].label[that.$lang];
+
   that.$container.insertAdjacentHTML(
       'afterbegin',
       `<div class="chcontext__logo">
           <img src="${apiAddress}/images/base/logo.svg?_debugResources=y&n=1446630144466" />
-          <h3 class="chcontext__logo-name">Federacja Bibliotek Cyfrowych</h3>
+          <h3 class="chcontext__logo-name">${providerName}</h3>
       </div>`
     );
 
@@ -96,7 +104,6 @@ const updateDataList = (that, data) => {
       );
     }
     updateListDom(that);
-    updateTotalDom(that);
 };
 
 const updateListDom = (that) => {
@@ -138,6 +145,8 @@ const updateListDom = (that) => {
         'beforeend',
         html
       );
+
+    updateTotalDom(that);
   } else {
     noResultsTemplate(that);
   }
@@ -146,7 +155,7 @@ const updateListDom = (that) => {
 const updateTotalDom = (that) => {
   let html = `<div>`;
   html += `<a href="${searchUrl}${that.$query}">`;
-  html += `Wszystkie wyniki wyszukiwania`;
+  html += `${dictionary[that.$lang].seeMore}`;
   html += `<span> (${that.$numFound})</span>`;
   html += `</a>`;
   html += `</div>`;
