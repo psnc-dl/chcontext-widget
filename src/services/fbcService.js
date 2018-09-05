@@ -39,7 +39,11 @@ const loadingTemplate = (that) => {
 };
 
 const noResultsTemplate = (that) => {
-  that.$container.querySelector('.chcontext__results__container').innerHTML = 'no results';
+  let html = `<div class="chcontext__no-results">`;
+  html += `<p>${dictionary[that.$lang].noResults}</p>`;
+  html += `</div>`;
+
+  that.$container.querySelector('.chcontext__results__container').innerHTML = html;
 };
 
 const errorTemplate = (that) => {
@@ -62,7 +66,7 @@ const prepareTemplate = (that) => {
   that.$container.insertAdjacentHTML(
       'afterbegin',
       `<div class="chcontext__logo">
-          <img src="${apiAddress}/images/base/logo.svg?_debugResources=y&n=1446630144466" />
+          <img class="chcontext__logo__img" src="${apiAddress}/images/base/logo.svg?_debugResources=y&n=1446630144466" />
           <h3 class="chcontext__logo-name">${providerName}</h3>
       </div>`
     );
@@ -72,6 +76,8 @@ const prepareTemplate = (that) => {
       `<div class="chcontext__results__container">
       </div>`
     );
+
+  that.$container.querySelector('.chcontext__logo__img').addEventListener('error', function() { this.style="display: none" });
 };
 
 const updateDataList = (that, data) => {
@@ -114,24 +120,30 @@ const updateListDom = (that) => {
       html += "<li class=\"chcontext__data-list__item\">";
 
       if (!!item.link) {
-        html += `<a class=\"chcontext__data-list__item\" href=${item.link}>`;
+        html += `<a class=\"chcontext__data-list__link\" href=${item.link}>`;
       }
 
       if (!!item.imgLink) {
-        html += `<img src=${item.imgLink} />`;
+        html += `<div class=\"chcontext__data-list__item--left\">`;
+        html += `<img class=\"chcontext__data-list__item__img\" src=${item.imgLink} />`;
+        html += `</div>`;
       }
 
+      html += `<div class=\"chcontext__data-list__item--right\">`;
+
       if (!!item.title) {
-        html += `<div class=\"chcontext__data-list__item\">${item.title}</div>`;
+        html += `<div class=\"chcontext__data-list__item__text title\">${item.title}</div>`;
       }
 
 			if (!!item.author) {
-        html += `<div class=\"chcontext__data-list__item\">${item.author}</div>`;
+        html += `<div class=\"chcontext__data-list__item__text\">${dictionary[that.$lang].authorLabel}: ${item.author}</div>`;
       }
 
 			if(!!item.date){
-        html += `<div class=\"chcontext__data-list__item\">${item.date}</div>`;
+        html += `<div class=\"chcontext__data-list__item__text\">${dictionary[that.$lang].dateLabel}: ${item.date}</div>`;
 			}
+
+      html += `</div>`;
 
       if (!!item.link) {
         html += `</a>`;
@@ -154,7 +166,7 @@ const updateListDom = (that) => {
 
 const updateTotalDom = (that) => {
   let html = `<div>`;
-  html += `<a href="${searchUrl}${that.$query}">`;
+  html += `<a href="${searchUrl}${that.$query}" class=\"chcontext__total__link\">`;
   html += `${dictionary[that.$lang].seeMore}`;
   html += `<span> (${that.$numFound})</span>`;
   html += `</a>`;
