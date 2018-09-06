@@ -3,7 +3,7 @@ export const dictionary = {
     "seeMore": "Więcej wyników",
     "error": "Wystąpił błąd",
     "reload": "Załaduj ponownie",
-    "noResults": "Nie znaleziono wyników.",
+    "noResults": "Nie znaleziono wyników",
     "poweredBy": "Dostarczone przez",
     "titleLabel": "Tytuł",
     "authorLabel": "Autor",
@@ -13,7 +13,7 @@ export const dictionary = {
     "seeMore": "See more results",
     "error": "Error",
     "reload": "Reload",
-    "noResults": "Results not found.",
+    "noResults": "Results not found",
     "poweredBy": "Powered by",
     "titleLabel": "Title",
     "authorLabel": "Author",
@@ -28,3 +28,4 @@ export const searchProviders = [
 ];
 
 export const defaultLang = "pl";
+export const availableLangs = ["pl", "en"];

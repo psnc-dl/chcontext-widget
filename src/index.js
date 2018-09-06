@@ -1,32 +1,32 @@
 import template from './template.js';
 import {createServiceFBC, updateData} from './services/fbcService.js';
-import {defaultLang, searchProviders} from './constants.js';
+import {defaultLang, searchProviders, availableLangs, dictionary} from './constants.js';
+import error from './icons/error.svg';
 
 (function() {
   class DateWidget extends HTMLElement {
     // Fires when an instance of the element is created.
     createdCallback() {
       this.createShadowRoot().innerHTML = template;
-
       this.$container = this.shadowRoot.querySelector('.chcontext__container');
-      this.$lang = this.getAttribute('lang') || defaultLang;
+      this.$lang = availableLangs.includes(this.getAttribute('lang')) ? this.getAttribute('lang') : defaultLang;
       this.$theme = this.getAttribute('theme');
       this.$query = this.getAttribute('query');
       this.$page = this.getAttribute('page');
 
-      const isValidProvider = searchProviders.filter(provider => provider.name === this.$page).length > 0;
+      this.updateTheme();
 
+      const isValidProvider = searchProviders.filter(provider => provider.name === this.$page).length > 0;
       if (!this.$page || !isValidProvider) {
         this.showError();
         return;
       }
 
-      this.updateTheme();
       this.createService();
     };
 
     // Fires when an instance was inserted into the document.
-    attachedCallback() { console.log('widget loaded')};
+    attachedCallback() { };
 
     // Fires when an attribute was added, removed, or updated.
     attributeChangedCallback(attrName, oldVal, newVal) {
@@ -65,7 +65,13 @@ import {defaultLang, searchProviders} from './constants.js';
     };
 
     showError() {
-      this.$container.innerHTML = "error";
+      console.log('config error');
+
+      let html = `<div class="chcontext__error">`;
+      html += `<img class="chcontext__error__img" src="${error}" />`;
+      html += `<p class="chcontext__error__text">${dictionary[this.$lang].error}</p>`;
+      html += `</div>`;
+      this.$container.innerHTML = html;
     };
   }
 

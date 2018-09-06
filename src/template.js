@@ -89,22 +89,81 @@ let template =
       text-decoration: none;
     }
 
+    .chcontext__loading {
+      padding: 10px 0;
+    }
+
+    .chcontext__loading__img {
+      height: 30px;
+    }
+
     .chcontext__data-list__link:hover {
     }
 
     .chcontext__total__link {
-      color: #6f4897;
-      font-size: 15px;
-      font-weight: bold;
     }
 
-    .chcontext__total__link:hover {
-      color: #563d7c;
+    .chcontext__no-results,
+    .chcontext__error {
+      margin: 40px 0 10px;
+    }
+
+    .chcontext__no-results__img,
+    .chcontext__error__img {
+      height: 50px;
+    }
+
+    .chcontext__logo a {
+      text-decoration: none;
+    }
+    
+    .chcontext__reload {
+      cursor: pointer;
     }
 
     /* THEME CODE */
     .chcontext__container.violet {
       border-color: #6f4897;
+    }
+
+    .chcontext__container.violet .chcontext__error__text,
+    .chcontext__container.violet .chcontext__no-results__text {
+      color: #6f4897;
+      font-size: 14px;
+    }
+
+    .chcontext__container.violet .chcontext__logo-name {
+      color: #6f4897;
+      font-weight: normal;
+      margin: 9px 0;
+    }
+
+    .chcontext__container.violet .chcontext__logo__img {
+      height: 50px;
+    }
+
+    .chcontext__container.violet .chcontext__total__link,
+    .chcontext__container.violet .chcontext__reload {
+      background-image: -webkit-linear-gradient(top, #6f4897 0%, #563d7c 100%);
+      background-image: -o-linear-gradient(top, #6f4897 0%, #563d7c 100%);
+      background-image: -webkit-gradient(linear, left top, left bottom, from(#6f4897), to(#563d7c ));
+      background-image: linear-gradient(to bottom, #6f4897 0%, #563d7c 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff337ab7', endColorstr='#ff265a88', GradientType=0);
+      filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+      background-repeat: repeat-x;
+      border-color: #563d7c;
+      color: #ffffff;
+      padding: 9px 12px;
+      font-size: 14px;
+      border-radius: 4px;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .chcontext__container.violet .chcontext__total__link:hover,
+    .chcontext__container.violet .chcontext__reload:hover {
+      background: #563d7c;
+      border-color: #563d7c;
     }
 
     .chcontext__container.violet .chcontext__data-list__link {

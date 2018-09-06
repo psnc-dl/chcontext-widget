@@ -1,9 +1,12 @@
 import {dictionary} from '../constants.js';
 import {searchProviders} from '../constants.js';
 import loading from '../icons/loading.gif';
+import magnifier from '../icons/magnifier.svg';
+import error from '../icons/error.svg';
 
 const apiAddress = 'http://fbc.pionier.net.pl';
-const searchUrl = apiAddress + '/index/select?q=';
+const selectUrl = apiAddress + '/index/select?q=';
+const searchUrl = apiAddress + '/search/query?q=';
 const rowsNum = 3;
 const resourceUrl = apiAddress + '/search#q=id:';
 const thumbnailUrl = apiAddress + '/thumbnails/';
@@ -11,7 +14,7 @@ const thumbnailUrl = apiAddress + '/thumbnails/';
 export const updateData = (that) => {
   loadingTemplate(that);
 
-  fetch(`${searchUrl}${that.$query}&rows=${rowsNum}&fl=dc_title%2Cdcterms_alternative%2Cdc_creator%2Cdc_contributor%2Cid%2Cdc_date&wt=json`)
+  fetch(`${selectUrl}${that.$query}&rows=${rowsNum}&fl=dc_title%2Cdcterms_alternative%2Cdc_creator%2Cdc_contributor%2Cid%2Cdc_date&wt=json`)
     .then(response => {
       if (response.ok) {
         return Promise.resolve(response);
@@ -34,22 +37,26 @@ export const updateData = (that) => {
 };
 
 const loadingTemplate = (that) => {
-  let html = `<img src=${loading} />`;
+  let html = `<div class="chcontext__loading" />`;
+  html += `<img class="chcontext__loading__img" src=${loading} />`;
+  html += `</div>`;
   that.$container.querySelector('.chcontext__results__container').innerHTML = html;
 };
 
 const noResultsTemplate = (that) => {
-  let html = `<div class="chcontext__no-results">`;
-  html += `<p>${dictionary[that.$lang].noResults}</p>`;
-  html += `</div>`;
-
-  that.$container.querySelector('.chcontext__results__container').innerHTML = html;
+  // let html = `<div class="chcontext__no-results">`;
+  // html += `<img class="chcontext__no-results__img" src="${magnifier}" />`;
+  // html += `<p class="chcontext__no-results__text">${dictionary[that.$lang].noResults}</p>`;
+  // html += `</div>`;
+  //
+  // that.$container.querySelector('.chcontext__results__container').innerHTML = html;
 };
 
 const errorTemplate = (that) => {
   let html = `<div class="chcontext__error">`;
-  html += `<p>${dictionary[that.$lang].error}</p>`;
-  html += `<button class="chcontext__reload">${dictionary[that.$lang].reload}</button>`;
+  html += `<img class="chcontext__error__img" src="${error}" />`;
+  html += `<p class="chcontext__error__text">${dictionary[that.$lang].error}</p>`;
+  html += `<button class="chcontext__reload" type="button">${dictionary[that.$lang].reload}</button>`;
   html += `</div>`;
 
   that.$container.querySelector('.chcontext__results__container').innerHTML = html;
@@ -66,8 +73,10 @@ const prepareTemplate = (that) => {
   that.$container.insertAdjacentHTML(
       'afterbegin',
       `<div class="chcontext__logo">
-          <img class="chcontext__logo__img" src="${apiAddress}/images/base/logo.svg?_debugResources=y&n=1446630144466" />
-          <h3 class="chcontext__logo-name">${providerName}</h3>
+          <a href=${apiAddress} target="_blank">
+            <img class="chcontext__logo__img" src="${apiAddress}/images/base/logo.svg?_debugResources=y&n=1446630144466" />
+            <h3 class="chcontext__logo-name">${providerName}</h3>
+          </a>
       </div>`
     );
 
@@ -120,7 +129,7 @@ const updateListDom = (that) => {
       html += "<li class=\"chcontext__data-list__item\">";
 
       if (!!item.link) {
-        html += `<a class=\"chcontext__data-list__link\" href=${item.link}>`;
+        html += `<a target="_blank" class=\"chcontext__data-list__link\" href=${item.link}>`;
       }
 
       if (!!item.imgLink) {
@@ -166,7 +175,7 @@ const updateListDom = (that) => {
 
 const updateTotalDom = (that) => {
   let html = `<div>`;
-  html += `<a href="${searchUrl}${that.$query}" class=\"chcontext__total__link\">`;
+  html += `<a target="_blank" href="${searchUrl}${that.$query}" class=\"chcontext__total__link\">`;
   html += `${dictionary[that.$lang].seeMore}`;
   html += `<span> (${that.$numFound})</span>`;
   html += `</a>`;
