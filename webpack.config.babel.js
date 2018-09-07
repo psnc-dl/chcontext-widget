@@ -28,7 +28,7 @@ export default {
                 },
               },
             ],
-          }]
+        }]
     },
     plugins: [
         new HtmlWebpackPlugin({

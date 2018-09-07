@@ -1,13 +1,22 @@
+import 'whatwg-fetch'; 
 import template from './template.js';
 import {createServiceFBC, updateData} from './services/fbcService.js';
 import {defaultLang, searchProviders, availableLangs, dictionary} from './constants.js';
 import error from './icons/error.svg';
 
 (function() {
+  let tmpl = document.createElement('template');
+  tmpl.innerHTML = template;
+
   class DateWidget extends HTMLElement {
-    // Fires when an instance of the element is created.
-    createdCallback() {
-      this.createShadowRoot().innerHTML = template;
+    constructor() {
+      super();
+
+      let shadowRoot = this.attachShadow({mode: 'open'});
+      shadowRoot.appendChild(tmpl.content.cloneNode(true));
+    }
+
+    connectedCallback() {
       this.$container = this.shadowRoot.querySelector('.chcontext__container');
       this.$lang = availableLangs.includes(this.getAttribute('lang')) ? this.getAttribute('lang') : defaultLang;
       this.$theme = this.getAttribute('theme');
@@ -25,10 +34,6 @@ import error from './icons/error.svg';
       this.createService();
     };
 
-    // Fires when an instance was inserted into the document.
-    attachedCallback() { };
-
-    // Fires when an attribute was added, removed, or updated.
     attributeChangedCallback(attrName, oldVal, newVal) {
       switch (attrName) {
         case "theme":
@@ -74,6 +79,5 @@ import error from './icons/error.svg';
       this.$container.innerHTML = html;
     };
   }
-
-  document.registerElement('date-widget', DateWidget);
+  customElements.define('date-widget', DateWidget);
 })();
