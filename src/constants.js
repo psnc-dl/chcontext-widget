@@ -22,8 +22,8 @@ export const dictionary = {
 };
 
 export const searchProviders = [
-	{name: "Europeana", label: ""},
-	{name: "DPLA", label: ""},
+	// {name: "Europeana", label: ""},
+	// {name: "DPLA", label: ""},
 	{name: "FBC", label: {pl: "Federacja Bibliotek Cyfrowych", en: "FBC"}}
 ];
 

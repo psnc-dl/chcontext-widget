@@ -1,4 +1,4 @@
-import 'whatwg-fetch'; 
+import 'whatwg-fetch';
 import template from './template.js';
 import {createServiceFBC, updateData} from './services/fbcService.js';
 import {defaultLang, searchProviders, availableLangs, dictionary} from './constants.js';
@@ -8,7 +8,7 @@ import error from './icons/error.svg';
   let tmpl = document.createElement('template');
   tmpl.innerHTML = template;
 
-  class DateWidget extends HTMLElement {
+  class ChcontextWidget extends HTMLElement {
     constructor() {
       super();
 
@@ -20,7 +20,18 @@ import error from './icons/error.svg';
       this.$container = this.shadowRoot.querySelector('.chcontext__container');
       this.$lang = availableLangs.includes(this.getAttribute('lang')) ? this.getAttribute('lang') : defaultLang;
       this.$theme = this.getAttribute('theme');
-      this.$query = this.getAttribute('query');
+
+      if (!this.getAttribute('query')) {
+        this.showError();
+        return;
+      }
+
+      this.$query = this.getAttribute('query').includes('/') ?
+                        this.getAttribute('query').split('/')[0]
+                        : this.getAttribute('query').includes(';') ?
+                            this.getAttribute('query').split(';')[0]
+                              : this.getAttribute('query');
+
       this.$page = this.getAttribute('page');
 
       this.updateTheme();
@@ -79,5 +90,5 @@ import error from './icons/error.svg';
       this.$container.innerHTML = html;
     };
   }
-  customElements.define('date-widget', DateWidget);
+  customElements.define('chcontext-widget', ChcontextWidget);
 })();

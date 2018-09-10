@@ -14,7 +14,7 @@ const thumbnailUrl = apiAddress + '/thumbnails/';
 export const updateData = (that) => {
   loadingTemplate(that);
 
-  fetch(`${selectUrl}${that.$query}&rows=${rowsNum}&fl=dc_title%2Cdcterms_alternative%2Cdc_creator%2Cdc_contributor%2Cid%2Cdc_date&wt=json`)
+  fetch(`${selectUrl}${encodeURIComponent(that.$query)}&rows=${rowsNum}&fl=dc_title%2Cdcterms_alternative%2Cdc_creator%2Cdc_contributor%2Cid%2Cdc_date&wt=json`)
     .then(response => {
       if (response.ok) {
         return Promise.resolve(response);
@@ -134,7 +134,7 @@ const updateListDom = (that) => {
 
       if (!!item.imgLink) {
         html += `<div class=\"chcontext__data-list__item--left\">`;
-        html += `<img class=\"chcontext__data-list__item__img\" src=${item.imgLink} />`;
+        html += `<img class=\"chcontext__data-list__item__img\" src=${item.imgLink} onerror="this.style='display: none;'" />`;
         html += `</div>`;
       }
 

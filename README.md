@@ -7,7 +7,7 @@ Download:
 Usage:
 1. Add main.bundle.js to index.html file
 2. Basic configuration:
-<date-widget page="FBC" query=""></date-widget>
+<chcontext-widget page="FBC" query=""></chcontext-widget>
 Specify page and insert variable with query (ex. programatically).
 
 Attributes:

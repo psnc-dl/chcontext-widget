@@ -10,13 +10,15 @@ let template =
       position: relative;
       min-height: 100px;
       font-family: 'Roboto Condensed', sans-serif;
-      margin: 10px 0;
       transition: border .2s ease-in-out;
       font-family: tahoma, arial, helvetica, sans-serif;
       font-size: 14px;
-      width: 500px;
+      width: 100%;
       padding: 15px;
       text-align: center;
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box
     }
 
     .chcontext__data-list {
@@ -43,7 +45,6 @@ let template =
     }
 
     .chcontext__data-list__item--left {
-      width: 50px;
       text-align: center;
       display: flex;
       flex-direction: column;
@@ -52,12 +53,14 @@ let template =
 
     .chcontext__data-list__item--right {
       flex: 1;
-      padding: 0 10px;
+      padding-right: 10px;
     }
 
     .chcontext__data-list__item__img {
-      max-width: 100%;
+      max-width: 70px;
       max-height: 70px;
+      width: 100%;
+      margin-right: 10px;
     }
 
     .chcontext__data-list__item__text {
@@ -101,6 +104,7 @@ let template =
     }
 
     .chcontext__total__link {
+      color: #fff !important;
     }
 
     .chcontext__no-results,
@@ -116,7 +120,7 @@ let template =
     .chcontext__logo a {
       text-decoration: none;
     }
-    
+
     .chcontext__reload {
       cursor: pointer;
     }
@@ -180,7 +184,7 @@ let template =
 
     .chcontext__container.violet .chcontext__data-list__item:hover .chcontext__data-list__link,
     .chcontext__container.violet .chcontext__data-list__item:hover .chcontext__data-list__item__text.date {
-      color: #fff;
+      color: #fff !important;
     }
 
   </style>
