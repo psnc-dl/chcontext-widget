@@ -1,7 +1,7 @@
 import 'whatwg-fetch';
 import template from './template.js';
 import {createServiceFBC, updateData} from './services/fbcService.js';
-import {defaultLang, searchProviders, availableLangs, dictionary} from './constants.js';
+import {defaultQuery, defaultLang, searchProviders, availableLangs, dictionary} from './constants.js';
 import error from './icons/error.svg';
 
 (function() {
@@ -17,7 +17,7 @@ import error from './icons/error.svg';
     }
 
     connectedCallback() {
-      this.$titleQuery = document.getElementById('title') ? document.getElementById('title').innerHTML : undefined;
+      this.$titleQuery = document.getElementById(defaultQuery) ? document.getElementById(defaultQuery).innerHTML : undefined;
       this.$container = this.shadowRoot.querySelector('.chcontext__container');
       this.$lang = availableLangs.includes(this.getAttribute('lang')) ? this.getAttribute('lang') : defaultLang;
       this.$theme = this.getAttribute('theme');

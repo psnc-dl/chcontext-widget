@@ -1,3 +1,5 @@
+export const defaultQuery = "title";
+
 export const dictionary = {
   pl: {
     "seeMore": "Więcej wyników",
