@@ -32,7 +32,7 @@ export default {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'Custom template',
+            title: 'Chcontext widget',
             template: path.join(__dirname, 'src/index.template.html')
         }),
         new ScriptExtHtmlWebpackPlugin({
