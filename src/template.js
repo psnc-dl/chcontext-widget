@@ -7,6 +7,7 @@ let template =
       border-radius: 4px;
       box-shadow: 0 1px 2px rgba(0, 0, 0, .075);
       border: 1px solid #ddd;
+      margin-bottom: 10px;
       position: relative;
       min-height: 100px;
       font-family: 'Roboto Condensed', sans-serif;
@@ -14,7 +15,7 @@ let template =
       font-family: tahoma, arial, helvetica, sans-serif;
       font-size: 14px;
       width: 100%;
-      padding: 15px;
+      padding: 14px;
       text-align: center;
       box-sizing: border-box;
       -moz-box-sizing: border-box;
@@ -57,9 +58,7 @@ let template =
     }
 
     .chcontext__data-list__item__img {
-      max-width: 70px;
-      max-height: 70px;
-      width: 100%;
+      width: 70px;
       margin-right: 10px;
     }
 
@@ -107,9 +106,12 @@ let template =
       color: #fff !important;
     }
 
-    .chcontext__no-results,
-    .chcontext__error {
+    .chcontext__no-results {
       margin: 40px 0 10px;
+    }
+
+    .chcontext__error {
+      margin: 10px;
     }
 
     .chcontext__no-results__img,

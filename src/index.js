@@ -17,27 +17,23 @@ import error from './icons/error.svg';
     }
 
     connectedCallback() {
+      this.$titleQuery = document.getElementById('title') ? document.getElementById('title').innerHTML : undefined;
       this.$container = this.shadowRoot.querySelector('.chcontext__container');
       this.$lang = availableLangs.includes(this.getAttribute('lang')) ? this.getAttribute('lang') : defaultLang;
       this.$theme = this.getAttribute('theme');
+      this.updateTheme();
 
-      if (!this.getAttribute('query')) {
+      if (!this.$titleQuery) {
         this.showError();
         return;
       }
 
-      this.$query = this.getAttribute('query').includes('/') ?
-                        this.getAttribute('query').split('/')[0]
-                        : this.getAttribute('query').includes(';') ?
-                            this.getAttribute('query').split(';')[0]
-                              : this.getAttribute('query');
-
+      this.$query = this.$titleQuery.includes('/') ? this.$titleQuery.split('/')[0] : this.$titleQuery.includes(';') ? this.$titleQuery.split(';')[0] : this.$titleQuery;
       this.$page = this.getAttribute('page');
 
-      this.updateTheme();
+      const isValidProvider = page => searchProviders.filter(provider => provider.name === page).length > 0;
 
-      const isValidProvider = searchProviders.filter(provider => provider.name === this.$page).length > 0;
-      if (!this.$page || !isValidProvider) {
+      if (!this.$page || !isValidProvider(this.$page)) {
         this.showError();
         return;
       }

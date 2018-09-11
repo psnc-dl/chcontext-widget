@@ -75,7 +75,7 @@ const prepareTemplate = (that) => {
       `<div class="chcontext__logo">
           <a href=${apiAddress} target="_blank">
             <img class="chcontext__logo__img" src="${apiAddress}/images/base/logo.svg?_debugResources=y&n=1446630144466" />
-            <h3 class="chcontext__logo-name">${providerName}</h3>
+            <h4 class="chcontext__logo-name">${providerName}</h4>
           </a>
       </div>`
     );
