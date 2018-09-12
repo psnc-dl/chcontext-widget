@@ -162,7 +162,9 @@ const updateListDom = (that) => {
         html
       );
 
-    updateTotalDom(that);
+    if (that.$numFound > 3) {
+      updateTotalDom(that);
+    }
   } else {
     noResultsTemplate(that);
   }
