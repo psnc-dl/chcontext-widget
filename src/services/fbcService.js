@@ -1,10 +1,5 @@
-import {dictionary} from '../constants.js';
-import {searchProviders} from '../constants.js';
-import loading from '../icons/loading.gif';
-import magnifier from '../icons/magnifier.svg';
-import error from '../icons/error.svg';
+import {searchProviders, apiAddress, dictionary, loading, magnifier, error} from '../constants.js';
 
-const apiAddress = 'http://fbc.pionier.net.pl';
 const selectUrl = apiAddress + '/index/select?q=';
 const searchUrl = apiAddress + '/search/query?q=';
 const rowsNum = 3;

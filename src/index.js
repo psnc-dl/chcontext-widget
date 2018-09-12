@@ -1,8 +1,7 @@
 import 'whatwg-fetch';
 import template from './template.js';
 import {createServiceFBC, updateData} from './services/fbcService.js';
-import {defaultQuery, defaultLang, searchProviders, availableLangs, dictionary} from './constants.js';
-import error from './icons/error.svg';
+import {defaultQuery, defaultLang, searchProviders, availableLangs, dictionary, error} from './constants.js';
 
 (function() {
   let tmpl = document.createElement('template');
